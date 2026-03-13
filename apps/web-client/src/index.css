@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --blinkit-yellow: #FFD203;
+  --blinkit-yellow-light: #FFE14D;
+  --blinkit-yellow-dark: #E6BC02;
+  --blinkit-black: #000000;
+  --blinkit-green: #1C8C10;
+  --blinkit-green-light: #4CAF50;
+  --blinkit-green-dark: #156B0C;
+  --primary: var(--blinkit-yellow);
+  --secondary: var(--blinkit-black);
+  --success: var(--blinkit-green);
+  --bg-primary: #F3F4F6;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-yellow-400 text-black font-semibold px-4 py-2 rounded-lg transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-black text-white font-semibold px-4 py-2 rounded-lg hover:bg-gray-800 transition-colors;
+  }
+  
+  .btn-success {
+    @apply bg-green-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition-colors;
+  }
+  
+  .container-app {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .section-padding {
+    @apply py-6 md:py-8;
+  }
+  
+  .category-card {
+    @apply relative cursor-pointer;
+  }
+  
+  .product-card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden transition-all hover:shadow-md hover:border-gray-200;
+  }
+  
+  .product-image {
+    @apply transition-transform duration-300;
+  }
+  
+  .magic-add-btn .add-state {
+    @apply absolute inset-0 flex items-center justify-center bg-green-600 text-white font-semibold rounded-lg;
+    transform: translateY(0);
+    transition: transform 0.2s ease-out;
+  }
+  
+  .magic-add-btn .quantity-state {
+    @apply absolute inset-0 flex items-center justify-between bg-green-600 text-white rounded-lg px-1;
+    transform: translateY(100%);
+    transition: transform 0.2s ease-out;
+  }
+  
+  .magic-add-btn.active .add-state {
+    transform: translateY(-100%);
+  }
+  
+  .magic-add-btn.active .quantity-state {
+    transform: translateY(0);
+  }
+  
+  .cart-drawer-overlay {
+    @apply fixed inset-0 bg-black/50 z-40 transition-opacity;
+  }
+  
+  .cart-drawer {
+    @apply fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+  }
+  
+  .cart-drawer.open {
+    transform: translateX(0);
+  }
+  
+  .delivery-badge {
+    @apply inline-flex items-center gap-1 bg-yellow-400 text-black text-xs font-bold px-2 py-1 rounded;
+  }
+  
+  .search-input {
+    @apply w-full pl-12 pr-4 py-3 bg-gray-50 border-0 rounded-xl focus:ring-2 focus:ring-yellow-400 focus:bg-white transition-all;
+  }
+  
+  .quantity-selector {
+    @apply flex items-center justify-between bg-green-600 text-white rounded-lg py-1 px-2;
+  }
+  
+  .quantity-btn {
+    @apply w-7 h-7 flex items-center justify-center bg-white/20 rounded hover:bg-white/30 transition-colors font-bold;
+  }
+  
+  .quantity-value {
+    @apply font-semibold text-sm min-w-[24px] text-center;
+  }
+}
+
+@layer utilities {
+  .shadow-soft {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

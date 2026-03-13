@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: familymart-mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    networks:
+      - familymart-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: familymart-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - familymart-network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+    container_name: familymart-elasticsearch
+    restart: always
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - familymart-network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: familymart-server
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://${MONGO_USER}:${MONGO_PASSWORD}@mongodb:27017/family-mart?authSource=admin
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=${JWT_SECRET}
+      - RAZORPAY_KEY_ID=${RAZORPAY_KEY_ID}
+      - RAZORPAY_KEY_SECRET=${RAZORPAY_KEY_SECRET}
+      - FRONTEND_URL=${FRONTEND_URL}
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - familymart-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: familymart-client
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - VITE_API_URL=${SERVER_URL}/api
+    depends_on:
+      - server
+    networks:
+      - familymart-network
+
+volumes:
+  mongodb_data:
+  redis_data:
+  elasticsearch_data:
+
+networks:
+  familymart-network:
+    driver: bridge

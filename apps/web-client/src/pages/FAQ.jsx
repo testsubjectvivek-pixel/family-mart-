@@ -1,0 +1,105 @@
+import { useState } from 'react';
+import { ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
+
+function FAQ() {
+  const [openIndex, setOpenIndex] = useState(0);
+
+  const faqs = [
+    {
+      question: "How does FamilyMart delivery work?",
+      answer: "FamilyMart delivers groceries within 15-30 minutes of placing your order. Simply browse our app or website, add items to your cart, and we'll deliver them to your doorstep. We have delivery partners across New Delhi ready to serve you."
+    },
+    {
+      question: "What are the delivery charges?",
+      answer: "Delivery is FREE for orders above ₹199. For orders below ₹199, a small delivery fee of ₹29 applies. We also offer express delivery (within 15 minutes) for a fee of ₹39 on orders above ₹99."
+    },
+    {
+      question: "What areas do you deliver to?",
+      answer: "We currently deliver across all major areas of New Delhi including South Delhi, North Delhi, East Delhi, West Delhi, Central Delhi, and Gurgaon. We're constantly expanding our delivery network."
+    },
+    {
+      question: "How can I track my order?",
+      answer: "Once you place an order, you can track it in real-time from the 'My Orders' section. You'll receive SMS updates at every stage - order confirmed, packed, out for delivery, and delivered."
+    },
+    {
+      question: "What is your return policy?",
+      answer: "We offer a 24-hour return policy for most grocery items. If you're not satisfied with the quality of fresh produce or any other product, you can request a return or refund within 24 hours of delivery. For damaged or expired items, we provide instant refunds."
+    },
+    {
+      question: "How can I cancel my order?",
+      answer: "You can cancel your order within 5 minutes of placing it, as long as it hasn't been packed yet. Go to 'My Orders', select the order, and click 'Cancel'. The refund will be processed within 5-7 business days."
+    },
+    {
+      question: "What payment methods do you accept?",
+      answer: "We accept all major payment methods including Credit/Debit Cards, UPI (Google Pay, PhonePe, Paytm), Wallets (Paytm, Amazon Pay), Net Banking, and Cash on Delivery (COD)."
+    },
+    {
+      question: "Do you offer scheduled deliveries?",
+      answer: "Yes! You can schedule your delivery for a specific time slot. We offer 2-hour time slots throughout the day. Scheduled orders help you plan better and sometimes come with special discounts."
+    },
+    {
+      question: "How do I contact customer support?",
+      answer: "You can reach our customer support through the 'Help' section in the app, call us at +91 98765 43210, email us at support@familymart.in, or use the live chat feature. We're available 8 AM to 10 PM daily."
+    },
+    {
+      question: "Are the prices on FamilyMart the same as in-store?",
+      answer: "Yes! We offer the same prices as our partner stores. Sometimes we have exclusive online deals and discounts that aren't available in-store. Check our 'Offers' section regularly for the best deals."
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-blinkit-green to-blinkit-greenDark py-16">
+        <div className="container-app">
+          <div className="text-center text-white">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h1>
+            <p className="text-xl text-white/90">
+              Find answers to the most common questions about FamilyMart
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-16">
+        <div className="container-app">
+          <div className="max-w-3xl mx-auto">
+            <div className="flex items-center justify-center gap-2 mb-8">
+              <HelpCircle className="w-6 h-6 text-blinkit-green" />
+              <span className="text-gray-600">Have more questions?</span>
+              <a href="/contact" className="text-blinkit-green font-medium hover:underline">Contact Us</a>
+            </div>
+
+            <div className="space-y-3">
+              {faqs.map((faq, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl overflow-hidden shadow-sm"
+                >
+                  <button
+                    onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
+                    className="w-full flex items-center justify-between p-5 text-left hover:bg-gray-50 transition-colors"
+                  >
+                    <span className="font-medium text-gray-800 pr-4">{faq.question}</span>
+                    {openIndex === index ? (
+                      <ChevronUp className="w-5 h-5 text-blinkit-green flex-shrink-0" />
+                    ) : (
+                      <ChevronDown className="w-5 h-5 text-gray-400 flex-shrink-0" />
+                    )}
+                  </button>
+                  {openIndex === index && (
+                    <div className="px-5 pb-5">
+                      <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+export default FAQ;

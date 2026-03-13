@@ -1,0 +1,37 @@
+{
+  "name": "family-mart",
+  "version": "1.0.0",
+  "description": "Family Mart E-Commerce Platform - Enterprise Grade",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "cd apps/web-client && npm run dev",
+    "dev:admin": "cd apps/admin-dashboard && npm run dev",
+    "dev:backend": "cd services/api-gateway && npm run dev",
+    "dev:mobile": "cd apps/mobile-app && flutter run",
+    "build": "npm run build:web && npm run build:admin",
+    "build:web": "cd apps/web-client && npm run build",
+    "build:admin": "cd apps/admin-dashboard && npm run build",
+    "build:mobile": "cd apps/mobile-app && flutter build apk",
+    "lint": "npm run lint:web && npm run lint:admin",
+    "lint:web": "cd apps/web-client && npm run lint",
+    "lint:admin": "cd apps/admin-dashboard && npm run lint",
+    "test": "npm run test:web && npm run test:backend",
+    "test:web": "cd apps/web-client && npm test",
+    "test:backend": "cd services/api-gateway && npm test",
+    "docker:up": "docker-compose -f infrastructure/docker/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f infrastructure/docker/docker-compose.yml down",
+    "seed": "cd services/api-gateway && npm run seed:all"
+  },
+  "devDependencies": {
+    "lerna": "^8.1.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
