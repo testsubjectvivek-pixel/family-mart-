@@ -30,8 +30,15 @@ const reviewRoutes = require('./routes/review.routes');
 const wishlistRoutes = require('./routes/wishlist.routes');
 
 const connectDB = async () => {
+  const mongoUri = process.env.MONGODB_URI;
+  
+  if (!mongoUri) {
+    console.error('MongoDB URI not configured. Set MONGODB_URI environment variable.');
+    return;
+  }
+  
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(mongoUri);
     console.log('MongoDB Connected Successfully');
   } catch (error) {
     console.error('MongoDB Connection Error:', error.message);
@@ -58,12 +65,18 @@ app.get('/', (req, res) => {
   res.json({
     success: true,
     message: 'Family Mart API',
-    version: '1.0.0'
+    version: '1.0.0',
+    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
   });
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'success', message: 'API is running', timestamp: new Date().toISOString() });
+  res.json({ 
+    status: 'success', 
+    message: 'API is running', 
+    timestamp: new Date().toISOString(),
+    mongodb: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+  });
 });
 
 app.use('/api/auth', authRoutes);
