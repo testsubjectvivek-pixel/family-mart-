@@ -52,7 +52,8 @@ const app = express();
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
-  'https://testsubjectvivek-pixel.github.io'
+  'https://testsubjectvivek-pixel.github.io',
+  'https://testsubjectvivek-pixel.github.io/family-mart/'
 ];
 
 app.use(cors({

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "homepage": "https://testsubjectvivek-pixel.github.io/family-mart-",
+  "homepage": "https://testsubjectvivek-pixel.github.io/family-mart-/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
