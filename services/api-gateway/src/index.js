@@ -4,7 +4,15 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
 
-dotenv.config({ path: require('path').resolve(__dirname, '../../../.env') });
+// Load environment variables - support both local and Railway
+const envPath = require('path').resolve(__dirname, '../../../../.env');
+const railwayEnvPath = process.env.RAILWAY_ENVIRONMENT ? undefined : envPath;
+
+if (require('fs').existsSync(envPath)) {
+  dotenv.config({ path: envPath });
+} else {
+  dotenv.config(); // Use environment variables directly on Railway
+}
 
 const authRoutes = require('./routes/auth.routes');
 const userRoutes = require('./routes/user.routes');
